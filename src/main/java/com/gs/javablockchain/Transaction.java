@@ -9,6 +9,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,7 +45,7 @@ public class Transaction {
 
     /**
      * Transaction content, signed by the issuer with his private key
-     * @Return byte[] byte array that represents the transaction content
+     * @return byte[] byte array that represents the transaction content
      * */
     public byte[] getTransactionContent(){
         byte[] content = ArrayUtils.addAll(String.valueOf(amount).getBytes(StandardCharsets.UTF_8));
@@ -56,9 +58,27 @@ public class Transaction {
 
     /**
      * Calculate the transaction's hash
-     * @Return Hash SHA256
+     * @return Hash SHA256
      * */
     public byte[] calculateTransactionHash(){
         return DigestUtils.sha256(getTransactionContent());
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Transaction transaction = (Transaction) o;
+        return Arrays.equals(hash, transaction.hash);
+    }
+
+    @Override
+    public int hashCode(){
+        return Arrays.hashCode(hash);
+    }
+
+    @Override
+    public String toString(){
+        return "{"+hash+","+issuer+","+receiver+","+amount+","+signature+","+new Date(timestamp)+"}";
     }
 }
