@@ -69,7 +69,13 @@ public class Transaction {
      * @return true if the transaction has a valid hash
      * */
     public boolean isValid(){
-        return false; //TODO do this method
+        if(!Arrays.equals(getHash(), calculateTransactionHash())) return false;
+        try {
+            if(!SignatureUtils.validateSignature(getTransactionContent(), getSignature(), issuer)) return false;
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override
