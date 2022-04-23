@@ -64,6 +64,14 @@ public class Transaction {
         return DigestUtils.sha256(getTransactionContent());
     }
 
+    /**
+     * Verify if a transaction is valid
+     * @return true if the transaction has a valid hash
+     * */
+    public boolean isValid(){
+        return false; //TODO do this method
+    }
+
     @Override
     public boolean equals(Object o){
         if(this == o) return true;
