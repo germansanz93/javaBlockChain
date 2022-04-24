@@ -1,0 +1,84 @@
+package com.gs.javablockchain;
+
+/*
+* A block has a header and a content.
+* The header includes:
+*   Actual Block hash obtained from the header content
+*   Previous Block hash
+*   Timestamp
+*   POW difficulty
+*   Nonce
+*   Merkle tree root
+* The content includes:
+*   Transactions list included within the block
+* */
+
+import com.google.common.primitives.Longs;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.stream.Collectors;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class Block {
+    private byte[] hash;
+    private byte[] previousBlockHash;
+    private long nonce;
+    private long timestamp;
+    private byte[] merkleTreeRoot;
+    private List<Transaction> transactions;
+
+    public Block(byte[] previousBlockHash, List<Transaction> transactions, long nonce){
+        this.previousBlockHash = previousBlockHash;
+        this.transactions = transactions;
+        this.nonce = nonce;
+        this.timestamp = System.currentTimeMillis();
+        this.merkleTreeRoot = calculateMerkleTreeRoot();
+        this.hash = calculateHash();
+    }
+
+    /**
+     * Generate block hash from the header data
+     * @return Hash SHA256
+     * */
+    private byte[] calculateHash(){
+        byte[] hashableData = ArrayUtils.addAll(previousBlockHash, merkleTreeRoot);
+        hashableData = ArrayUtils.addAll(hashableData, Longs.toByteArray(nonce));
+        hashableData = ArrayUtils.addAll(hashableData, Longs.toByteArray(timestamp));
+        return DigestUtils.sha256(hashableData);
+    }
+
+    /**
+     * Calculate the merkle tree root with the transactions
+     * @return Hash SHA256
+     * */
+    private byte[] calculateMerkleTreeRoot(){
+        Queue<byte[]> hashQueue = transactions.stream().map(Transaction::getHash).collect(Collectors.toCollection(LinkedList::new));
+        while (hashQueue.size() > 1){
+            byte[] info = ArrayUtils.addAll(hashQueue.poll(), hashQueue.poll());
+            hashQueue.add(DigestUtils.sha256(info));
+        }
+        return hashQueue.poll();
+    }
+
+    /**
+     * Zeroes Qty at the beginning of the hash(POW complexity)
+     * @return int number of leading zeroes
+     * */
+    public int getHashZeroesNumber(){
+        for(int i = 0; i < getHash().length; i++){
+            if(getHash()[i] != 0) return i;
+        }
+        return getHash().length;
+    }
+}
