@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -80,5 +82,24 @@ public class Block {
             if(getHash()[i] != 0) return i;
         }
         return getHash().length;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return Arrays.equals(hash, block.hash);
+    }
+
+    @Override
+    public int hashCode(){
+        return Arrays.hashCode(hash);
+    }
+
+    @Override
+    public String toString(){
+        return "{hash: "+hash+", previousBlockHash: "+previousBlockHash+", merkleTreeRoot: "+merkleTreeRoot+
+            ", nonce: "+nonce+", timestamp: "+new Date(timestamp)+", Transactions: "+transactions.toString()+"}";
     }
 }
