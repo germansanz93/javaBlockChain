@@ -10,6 +10,7 @@ import java.util.Collection;
 public class TransactionService {
     private TransactionPool transactionPool = new TransactionPool();
 
+    public TransactionService(){};
     public TransactionPool getTransactionPool(){
         return transactionPool;
     }
