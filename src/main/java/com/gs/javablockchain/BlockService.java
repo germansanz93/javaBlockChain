@@ -2,7 +2,9 @@ package com.gs.javablockchain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URL;
 import java.util.Arrays;
 
 @Service
@@ -34,6 +36,17 @@ public class BlockService {
             log.info("Block added to the chain");
             return true;
         } else return false;
+    }
+
+    /**
+     * Get blockchain from another node
+     * @param nodeURL
+     * @param restTemplate RestTemplate to use
+     * */
+    public void getBlockChainFromAnotherNode(URL nodeURL, RestTemplate restTemplate){
+        Blockchain chain = restTemplate.getForObject(nodeURL + "/chain", Blockchain.class);
+        log.info("Chain obtained from {}", nodeURL);
+        this.blockchain = chain;
     }
 
     /**
