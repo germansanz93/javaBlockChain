@@ -22,8 +22,7 @@ public class BlockService {
     public Blockchain getBlockchain(){
         return blockchain;
     }
-    private final int MAX_TX_QTY = 10; //TODO remove when Configuration is present
-    private final int DIFFICULT = 3; //TODO remove when Configuration is present
+
     /**
      * Add block to the blockchain
      * @param block to be added
@@ -68,7 +67,7 @@ public class BlockService {
                 return false;
             }
         }
-        if(block.getTransactions().size() > MAX_TX_QTY){ //TODO remove constant here
+        if(block.getTransactions().size() > Configuration.getInstance().getMaxTransactionsNumber()){
             log.error("Transactions qty is over limit");
             return false;
         }
@@ -76,7 +75,7 @@ public class BlockService {
             log.error("Some transactions are not in pool");
             return false;
         }
-        if(block.getHashZeroesNumber() != DIFFICULT) { //TODO remove constant here
+        if(block.getHashZeroesNumber() != Configuration.getInstance().getDifficult()) {
            log.error("Block difficult invalid");
             return false;
         }
