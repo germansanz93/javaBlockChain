@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Data
 @Builder
+@Slf4j
 public class Block {
     private byte[] hash;
     private byte[] previousBlockHash;
@@ -82,6 +84,35 @@ public class Block {
             if(getHash()[i] != 0) return i;
         }
         return getHash().length;
+    }
+
+    public boolean isValid(){
+        if(this.hash == null){
+            log.error("Invalid hash");
+            return false;
+        }
+        if(this.previousBlockHash != null && this.nonce <= 0){
+            log.error("Invalid Nonce");
+            return false;
+        }
+        if(this.merkleTreeRoot == null){
+            log.error("Invalid merkle tree");
+            return false;
+        }
+        if(this.transactions == null){
+            log.error("Block with no transactions");
+            return false;
+        }
+        if(!Arrays.equals(getMerkleTreeRoot(), calculateMerkleTreeRoot())){
+            log.error("Invalid Merkle tree root");
+            return false;
+        }
+        if(!Arrays.equals(getHash(), calculateHash())){
+            log.error("Invalid hash");
+            return false;
+        }
+        return true;
+
     }
 
     @Override
