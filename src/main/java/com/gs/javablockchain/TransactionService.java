@@ -1,5 +1,6 @@
 package com.gs.javablockchain;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,8 +10,8 @@ import java.util.Collection;
 @Service
 public class TransactionService {
     private TransactionPool transactionPool = new TransactionPool();
-
-    public TransactionService(){};
+    @Autowired
+    public TransactionService(){/*No args*/}
     public TransactionPool getTransactionPool(){
         return transactionPool;
     }
