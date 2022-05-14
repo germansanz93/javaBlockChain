@@ -2,6 +2,7 @@ package com.gs.javablockchain.services;
 
 import com.gs.javablockchain.utils.Configuration;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Service
 @Slf4j
 @Getter
+@Setter
 public class NodeService implements ApplicationListener {
 
     private final BlockService blockService;
@@ -35,6 +37,20 @@ public class NodeService implements ApplicationListener {
     public NodeService(BlockService blockService, TransactionService transactionService){
         this.blockService = blockService;
         this.transactionService = transactionService;
+    }
+
+    /**
+     * add node
+     * */
+    public synchronized void addNode(URL nodeUrl){
+        neighbourNodes.add(nodeUrl);
+    }
+
+    /**
+     * remove node
+     * */
+    public synchronized void removeNode(URL nodeUrl){
+        neighbourNodes.remove(nodeUrl);
     }
 
     /**
