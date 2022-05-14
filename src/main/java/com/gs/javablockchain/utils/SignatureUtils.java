@@ -1,4 +1,4 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.utils;
 
 import lombok.extern.slf4j.Slf4j;
 

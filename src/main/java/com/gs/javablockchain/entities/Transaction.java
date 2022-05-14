@@ -1,6 +1,7 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.entities;
 
 import com.google.common.primitives.Longs;
+import com.gs.javablockchain.utils.SignatureUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

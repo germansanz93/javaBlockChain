@@ -1,5 +1,6 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.services;
 
+import com.gs.javablockchain.utils.Configuration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

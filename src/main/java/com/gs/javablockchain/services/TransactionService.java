@@ -1,5 +1,7 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.services;
 
+import com.gs.javablockchain.entities.Transaction;
+import com.gs.javablockchain.entities.TransactionPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -1,4 +1,4 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Iterator;
 import java.util.List;
 
 @AllArgsConstructor

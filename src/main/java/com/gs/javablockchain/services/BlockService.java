@@ -1,5 +1,8 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.services;
 
+import com.gs.javablockchain.utils.Configuration;
+import com.gs.javablockchain.entities.Block;
+import com.gs.javablockchain.entities.Blockchain;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

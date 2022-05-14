@@ -1,4 +1,4 @@
-package com.gs.javablockchain;
+package com.gs.javablockchain.entities;
 
 /*
 * A block has a header and a content.
