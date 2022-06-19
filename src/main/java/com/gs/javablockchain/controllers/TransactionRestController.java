@@ -7,6 +7,8 @@ import com.gs.javablockchain.services.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +35,7 @@ public class TransactionRestController {
      * Get the transaction pool pending to be added in a block
      * @return JSON transaction pool
      * */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     TransactionPool getTransactionPool(){
         return transactionService.getTransactionPool();
     }
@@ -44,7 +46,7 @@ public class TransactionRestController {
      * @param propagate if the transaction must be sent to other nodes
      * @param response 202 code if the transaction is added to the pool or 406 in other cases
      * */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     void addTransaction(@RequestBody Transaction transaction, @RequestParam(required = false) Boolean propagate, HttpServletResponse response){
         log.info("Add transaction {}", Base64.encodeBase64String(transaction.getHash()));
         boolean isSuccess = transactionService.addTransaction(transaction);

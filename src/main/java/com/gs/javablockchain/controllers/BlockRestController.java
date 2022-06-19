@@ -6,6 +6,9 @@ import com.gs.javablockchain.services.BlockService;
 import com.gs.javablockchain.services.NodeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,7 @@ public class BlockRestController {
     private final BlockService blockService;
     private final NodeService nodeService;
 
+    @Autowired
     public BlockRestController(BlockService blockService, NodeService nodeService) {
         this.blockService = blockService;
         this.nodeService = nodeService;
@@ -31,7 +35,7 @@ public class BlockRestController {
      * Get block chain
      * @return JSON blocks list
      * */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     Blockchain getBlockChain(){
         log.info("Request block chain");
         return blockService.getBlockchain();
@@ -43,7 +47,7 @@ public class BlockRestController {
      * @param propagate if the block must be propagated
      * @param response 202 if the block is added and 406 in another case
      * */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     void addBlock(@RequestBody Block block, @RequestParam(required = false) Boolean propagate, HttpServletResponse response){
         log.info(Base64.encodeBase64String(block.getHash()));
         boolean isSuccess = blockService.addBlock(block);

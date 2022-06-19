@@ -2,6 +2,7 @@ package com.gs.javablockchain.controllers;
 
 import com.gs.javablockchain.services.NodeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,7 +72,7 @@ public class NodeRestController {
      * Endpoint to get the public ip of a node
      * @return publicIp
      * */
-    @GetMapping
+    @GetMapping("ip")
     String getPublicIp(HttpServletRequest request){
         log.info("ip public request");
         return request.getRemoteAddr();

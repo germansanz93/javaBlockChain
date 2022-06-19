@@ -4,6 +4,7 @@ import com.gs.javablockchain.utils.Configuration;
 import com.gs.javablockchain.entities.Block;
 import com.gs.javablockchain.entities.Blockchain;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,7 @@ public class BlockService {
 
     private Blockchain blockchain = Blockchain.builder().build();
 
+    @Autowired
     public BlockService (TransactionService transactionService){
         this.transactionService = transactionService;
     }
